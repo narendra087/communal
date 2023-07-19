@@ -22,7 +22,10 @@ import morgan from 'morgan'
 
 import { fileURLToPath } from 'url'
 
-// ***** Configuration
+import authRoutes from './routes/auth.js'
+import { register } from './controllers/auth.js'
+
+// ***** Server Configuration
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -42,7 +45,7 @@ app.use(cors())
 // ??? Set directory of static files
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')))
 
-// ***** File Storage Setup
+// ***** File Storage Configuration
 const storage = multer.diskStorage({
   destination: function(req, res, cb) {
     cb(null, 'public/assets')
@@ -53,7 +56,13 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage })
 
-// ***** Mongoose Setup
+// ***** Routes Configuration with Files
+app.post('/auth/register', upload.single('picture'), register)
+
+// ***** Routes Configuration
+app.use('/auth', authRoutes)
+
+// ***** Mongoose Configuration
 const PORT = process.env.PORT || 6006
 mongoose.connect(process.env.MONGO_URL, {
   useNewURLParser: true,
