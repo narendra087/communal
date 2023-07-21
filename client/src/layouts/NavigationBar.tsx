@@ -20,6 +20,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { SET_LOGOUT } from 'stores/slices/authSlice';
 
+const API_URL = process.env.REACT_APP_API_URL
+
 const NavigationBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   
@@ -28,7 +30,6 @@ const NavigationBar = () => {
   const user = useSelector((state:any) => state?.auth?.user)
   
   const logoutHandler = () => {
-    console.log('logout')
     dispatch(SET_LOGOUT())
     
     navigate('/')
@@ -54,7 +55,7 @@ const NavigationBar = () => {
                 minW={0}>
                 <Avatar
                   size={'sm'}
-                  src={'https://avatars.dicebear.com/api/male/username.svg'}
+                  src={`${API_URL}/assets/${user?.imgPath}`}
                 />
               </MenuButton>
               <MenuList alignItems={'center'}>
@@ -62,18 +63,18 @@ const NavigationBar = () => {
                 <Center>
                   <Avatar
                     size={'2xl'}
-                    src={'https://avatars.dicebear.com/api/male/username.svg'}
+                    src={`${API_URL}/assets/${user?.imgPath}`}
                   />
                 </Center>
                 <br />
-                <Center>
-                  <p>{user?.firstName} {user?.lastName}</p>
+                <Center flexDirection={'column'}>
+                  <Text>{user?.firstName} {user?.lastName}</Text>
+                  <Text fontSize={'xs'}>{user?.occupation || '-'}</Text>
                 </Center>
                 <br />
                 <MenuDivider />
-                <MenuItem>Your Servers</MenuItem>
-                <MenuItem>Account Settings</MenuItem>
-                <MenuItem onClick={() => logoutHandler()}>Logout</MenuItem>
+                <MenuItem>Profile</MenuItem>
+                <MenuItem onClick={() => logoutHandler()} color={'red.300'}>Logout</MenuItem>
               </MenuList>
             </Menu>}
           </Stack>
