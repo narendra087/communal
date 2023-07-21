@@ -42,7 +42,7 @@ const LoginForm = () => {
       <Flex
         borderRadius={'.5rem'}
         border={'1px solid'}
-        borderColor={'cyan.500'}
+        borderColor={'telegram.500'}
         flexDirection={'column'}
         p={'2rem'}
         w={'100%'}
@@ -89,13 +89,12 @@ const LoginForm = () => {
                 </FormControl>
                 
                 <Button w={'100%'} mt={'1rem'} colorScheme='telegram' type='submit'>Login</Button>
-                <Flex w={'100%'} alignItems={'center'} gap={'1rem'}>
-                  <Divider colorScheme='cyan' my={'1rem'} />
-                  <Text fontSize={'sm'}>or</Text>
-                  <Divider colorScheme='cyan' my={'1rem'} />
-                  
+                <Divider colorScheme='telegram' my={'1rem'} />
+                
+                <Flex alignItems={'center'} justifyContent={'space-between'} w={'100%'} gap={'1rem'}>
+                  <Text flex={1}>Doesn't have an account?</Text>
+                  <Button flex={1} w={'100%'} m={'0 auto'} colorScheme='whatsapp'>Register</Button>
                 </Flex>
-                <Button w={'80%'} m={'0 auto'} colorScheme='whatsapp'>Register</Button>
               </VStack>
             </form>
           )}

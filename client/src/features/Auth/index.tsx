@@ -1,6 +1,7 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Flex, Text } from '@chakra-ui/react'
 
 import LoginForm from './components/LoginForm'
+import RegisterForm from './components/RegisterForm'
 
 const AuthPage = () => {
   return (
@@ -16,16 +17,17 @@ const AuthPage = () => {
           <Flex justifyContent={'center'} flexDirection={'column'} flex={1}>
             <Text
               fontSize={'5xl'}
-              color={'cyan.500'}
+              color={'telegram.500'}
               fontWeight={700}
               letterSpacing={5}
             >COMMUNAL</Text>
-            <Text fontSize={'2xl'}>
+            <Text fontSize={'xl'}>
               Let the world hear your Story!
             </Text>
           </Flex>
           
           <LoginForm />
+          {/* <RegisterForm /> */}
         </Flex>
       </Flex>
     </>
