@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
-import { Button, Divider, Flex, FormControl, FormErrorMessage, FormLabel, Input, Text, VStack } from '@chakra-ui/react'
+import { Button, Divider, Flex, FormControl, FormErrorMessage, FormLabel, Input, Text, VStack, useToast } from '@chakra-ui/react'
 
 import { Formik, Field } from 'formik'
 import * as yup from 'yup'
 
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+
+import axios from 'axios'
 
 import { SET_LOGIN } from 'stores/slices/authSlice'
 
@@ -24,12 +25,36 @@ const initialValuesLogin: ILogin = {
   password: '',
 }
 
+const API_URL = process.env.REACT_APP_API_URL
+
 const LoginForm = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const toast = useToast()
   
-  const handleFormSubmit = async(values: ILogin, actions: any) => {
-    console.log(values, actions)
+  const handleLoginUser = async(values: any, actions: any) => {
+    try {
+      const res = await axios.post(API_URL + '/auth/login', values)
+      console.log(res)
+      
+      dispatch(
+        SET_LOGIN({
+          user: res.data.user,
+          token: res.data.token,
+        })
+      )
+      actions?.resetForm()
+      navigate('/home')
+    } catch (err) {
+      toast({
+        title: 'Login Failed.',
+        description: "Please check your email and password.",
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right'
+      })
+    }
   }
   
   return (
@@ -49,7 +74,7 @@ const LoginForm = () => {
         h={'max-content'}
       >
         <Formik
-          onSubmit={(values, actions) => handleFormSubmit(values, actions)}
+          onSubmit={(values, actions) => handleLoginUser(values, actions)}
           initialValues={initialValuesLogin}
           validationSchema={loginSchema}
         >
@@ -72,6 +97,7 @@ const LoginForm = () => {
                     name='email'
                     type='email'
                     variant='outline'
+                    placeholder='Enter your email'
                   />
                   <FormErrorMessage>{errors.email}</FormErrorMessage>
                 </FormControl>
@@ -84,6 +110,7 @@ const LoginForm = () => {
                     name='password'
                     type='password'
                     variant='outline'
+                    placeholder='Enter your password'
                   />
                   <FormErrorMessage>{errors.password}</FormErrorMessage>
                 </FormControl>
@@ -93,7 +120,15 @@ const LoginForm = () => {
                 
                 <Flex alignItems={'center'} justifyContent={'space-between'} w={'100%'} gap={'1rem'}>
                   <Text flex={1}>Doesn't have an account?</Text>
-                  <Button flex={1} w={'100%'} m={'0 auto'} colorScheme='whatsapp'>Register</Button>
+                  <Button
+                    flex={1}
+                    w={'100%'}
+                    m={'0 auto'}
+                    colorScheme='whatsapp'
+                    onClick={() => navigate('#register')}
+                  >
+                    Register
+                  </Button>
                 </Flex>
               </VStack>
             </form>

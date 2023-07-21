@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Flex, FormControl, FormErrorMessage, FormLabel, HStack, Input, Text, VStack } from '@chakra-ui/react'
+import { Box, Button, Divider, Flex, FormControl, FormErrorMessage, FormLabel, HStack, Input, Text, VStack, useToast } from '@chakra-ui/react'
 import { BiEditAlt } from 'react-icons/bi'
 
 import { Formik, Field } from 'formik'
@@ -46,6 +46,7 @@ const API_URL = process.env.REACT_APP_API_URL
 
 const RegisterForm = () => {
   const navigate = useNavigate()
+  const toast = useToast()
   
   const handleRegisterUser = async(values: any, actions: any) => {
     const formData = new FormData()
@@ -54,16 +55,28 @@ const RegisterForm = () => {
     }
     formData.append('imgPath', values?.image?.name)
     
-    console.log(formData)
-    
     try {
-      const res = await axios.post(API_URL + '/auth/register', formData)
-      console.log(res)
+      await axios.post(API_URL + '/auth/register', formData)
       
       actions?.resetForm()
+      toast({
+        title: 'Account Created.',
+        description: "We've created your account for you.",
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right'
+      })
       navigate('#login')
     } catch (err) {
-      console.log(err)
+      toast({
+        title: 'Account Creation Failed.',
+        description: "Please try again later or you can contact our team.",
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right'
+      })
     }
   }
   
