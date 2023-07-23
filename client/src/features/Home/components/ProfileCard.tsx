@@ -2,6 +2,7 @@ import { Avatar, Flex, VStack, HStack, Box, Text, IconButton, Divider } from '@c
 import { LiaUserCogSolid } from 'react-icons/lia'
 import { BiBriefcase, BiMap } from 'react-icons/bi'
 
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import CardWrapper from 'components/CardWrapper'
@@ -9,6 +10,7 @@ import CardWrapper from 'components/CardWrapper'
 const API_URL = process.env.REACT_APP_API_URL
 
 const ProfileCard = () => {
+  const navigate = useNavigate()
   const user = useSelector((state:any) => state?.auth?.user)
   const fullName = user ? `${user?.firstName} ${user?.lastName}` : '-'
   
@@ -24,7 +26,7 @@ const ProfileCard = () => {
             </Box>
           </HStack>
           
-          <IconButton aria-label='Profil page' icon={<LiaUserCogSolid />} />
+          <IconButton aria-label='Profil page' icon={<LiaUserCogSolid />} onClick={() => navigate(`/profile/${user?._id}`)} />
         </Flex>
         
         <Divider borderColor={'telegram.300'} />

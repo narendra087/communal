@@ -30,7 +30,8 @@ interface IState {
   mode: string,
   user?: IUser,
   token?: string,
-  posts: IPost[]
+  posts: IPost[],
+  friends: any[]
 }
 
 const initialState: IState = {
@@ -38,6 +39,7 @@ const initialState: IState = {
   user: undefined,
   token: undefined,
   posts: [],
+  friends: [],
 }
 
 export const authSlice = createSlice({

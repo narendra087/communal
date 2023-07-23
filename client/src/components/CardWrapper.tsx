@@ -7,7 +7,6 @@ interface IComponents {
 
 const CardWrapper = ({children}: IComponents) => {
   const mode = useColorMode()
-  console.log(mode)
   
   return (
     <Box
