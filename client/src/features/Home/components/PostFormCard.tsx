@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Avatar, Box, Textarea, Button, Divider, Flex, HStack, Text, VStack, IconButton, Tooltip, FormControl, FormErrorMessage } from '@chakra-ui/react'
-import { FiImage  } from 'react-icons/fi'
+import { FiImage, FiTrash } from 'react-icons/fi'
 import Dropzone from 'react-dropzone'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -52,8 +52,8 @@ const PostFormCard = () => {
       })
       
       dispatch(SET_POSTS({posts: res.data}))
-      setImage(undefined)
-      if (image) {
+      setStory('')
+      if (withImage) {
         toggleImage(false)
       }
     } catch (error) {
@@ -89,31 +89,42 @@ const PostFormCard = () => {
             onDrop={(acceptedFiles) => handleUploadImage(acceptedFiles)}
           >
             {({getRootProps, getInputProps}) => (
-              <Box
-                {...getRootProps()}
-                border={'1px dashed'}
-                borderColor={'telegram.500'}
-                p={'1rem'}
-                w={'100%'}
-                borderRadius={'.5rem'}
-                _hover={{
-                  cursor:'pointer',
-                }}
-              >
-                <input {...getInputProps()} />
-                { !image ? (
-                  <Text color={'gray.500'}>Choose or drop your image here...</Text>
-                ) : (
-                  <Flex alignItems={'center'} justifyContent={'space-between'}>
-                    <Text>{image?.name}</Text>
-                  </Flex>
+              <Flex gap={'1rem'} alignItems={'center'}>
+                <Box
+                  {...getRootProps()}
+                  border={'1px dashed'}
+                  borderColor={'telegram.500'}
+                  p={'1rem'}
+                  w={'100%'}
+                  borderRadius={'.5rem'}
+                  _hover={{
+                    cursor:'pointer',
+                  }}
+                >
+                  <input {...getInputProps()} />
+                  { !image ? (
+                    <Text color={'gray.500'}>Choose or drop your image here...</Text>
+                  ) : (
+                    <Flex alignItems={'center'} justifyContent={'space-between'}>
+                      <Text>{image?.name}</Text>
+                    </Flex>
+                  )}
+                </Box>
+                
+                {image && (
+                  <IconButton
+                    colorScheme='red'
+                    aria-label='Remove image'
+                    icon={<FiTrash />}
+                    onClick={() => setImage(undefined)}
+                  />
                 )}
-              </Box>
+              </Flex>
             )}
           </Dropzone>
         </Box>}
         
-        <Divider borderColor={'telegram.300'} />
+        <Divider borderColor={'gray.300'} />
         
         <Flex w={'100%'} alignItems={'center'} justifyContent={'space-between'} gap={'1rem'}>
           <Flex w={'100%'} alignItems={'center'} gap={'.5rem'}>
@@ -123,7 +134,7 @@ const PostFormCard = () => {
                 aria-label='Add Image'
                 icon={<FiImage />}
                 variant={withImage ? 'outline' : 'ghost'}
-                onClick={() => toggleImage(false)}
+                onClick={() => toggleImage(!withImage)}
                 colorScheme={withImage ? 'telegram' : undefined}
                 p={0}
                 isRound
@@ -135,7 +146,7 @@ const PostFormCard = () => {
               colorScheme='telegram'
               onClick={handlePost}
               isDisabled={!story && !image}
-            >Send</Button>
+            >POST</Button>
           </Flex>
         </Flex>
       </VStack>

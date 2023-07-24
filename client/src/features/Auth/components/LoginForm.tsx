@@ -35,7 +35,6 @@ const LoginForm = () => {
   const handleLoginUser = async(values: any, actions: any) => {
     try {
       const res = await axios.post(API_URL + '/auth/login', values)
-      console.log(res)
       
       dispatch(
         SET_LOGIN({
@@ -116,7 +115,7 @@ const LoginForm = () => {
                 </FormControl>
                 
                 <Button w={'100%'} mt={'1rem'} colorScheme='telegram' type='submit'>Login</Button>
-                <Divider colorScheme='telegram' my={'1rem'} />
+                <Divider borderColor={'gray.300'} my={'1rem'} />
                 
                 <Flex alignItems={'center'} justifyContent={'space-between'} w={'100%'} gap={'1rem'}>
                   <Text flex={1}>Doesn't have an account?</Text>
