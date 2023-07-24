@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Flex, Box, VStack, Text, IconButton, Divider, Image, Button, Avatar, Input, Center } from '@chakra-ui/react'
-import { FiShare2 } from 'react-icons/fi'
+import { Flex, VStack, Text, IconButton, Divider, Image, Button, Avatar, Input, Center, Box } from '@chakra-ui/react'
+import { FiShare2, FiSend } from 'react-icons/fi'
 import { BiHeart, BiSolidHeart, BiMessageDetail } from 'react-icons/bi'
 
 import CardWrapper from 'components/CardWrapper'
@@ -22,7 +22,7 @@ const PostCard = ({post}: IComponent) => {
   const token = useSelector((state:any) => state?.auth?.token)
   
   const [isComments, setIsComments] = useState(false)
-  const [comment, setCommend] = useState('')
+  const [comment, setComment] = useState('')
   
   const fullName = `${post?.firstName} ${post?.lastName}`
   const isLiked = Boolean(post?.likes[user?._id])
@@ -37,6 +37,27 @@ const PostCard = ({post}: IComponent) => {
         }
       })
       
+      dispatch(UPDATE_POST({post: res.data}))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
+  const postComment = async() => {
+    const payload = {
+      userId: user?._id,
+      comment,
+    }
+    
+    try {
+      const res = await axios.patch(API_URL + `/posts/${post?._id}/comment`, JSON.stringify(payload), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      })
+      
+      setComment('')
       dispatch(UPDATE_POST({post: res.data}))
     } catch (error) {
       console.log(error)
@@ -97,23 +118,31 @@ const PostCard = ({post}: IComponent) => {
                 placeholder='Comment this story ...'
                 variant={'outlined'}
                 value={comment}
-                onChange={(e) => setCommend(e.target.value)}
+                onChange={(e) => setComment(e.target.value)}
+              />
+              <IconButton
+                isDisabled={!comment}
+                aria-label='Send comment'
+                icon={<FiSend />}
+                onClick={() => postComment()}
               />
             </Flex>
             <Divider />
-            {
-              post?.comments.length ? (
-                post?.comments.map((comment:any, i:number) => (
-                  <Flex key={`${post?._id}-${i}`}>
-                    <Divider />
-                    <Text>
-                      {comment}
-                    </Text>
+            {post?.comments.length ? (
+              <VStack spacing={2} divider={<Divider />} w={'100%'}>
+                { post?.comments.map((dt:any, i:number) => (
+                  <Flex key={`${post?._id}-${i}`} w={'100%'} gap={'1rem'} alignItems={'start'}>
+                    <Avatar size={'sm'} name={dt?.name} src={`${API_URL}/assets/${dt?.imgPath}`} />
+                    <Box>
+                      <Text fontWeight={500}>{dt?.name}</Text>
+                      <Text>{dt?.comment || '-'}</Text>
+                    </Box>
                   </Flex>
-                )
-              )) : (
-                <Center color={'gray.500'}>No Commend yet.</Center>
-              )}
+                ))}
+              </VStack>
+            ) : (
+              <Center color={'gray.500'}>No Comment yet.</Center>
+            )}
           </VStack>
         )}
       </VStack>
