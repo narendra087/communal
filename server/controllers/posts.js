@@ -77,3 +77,34 @@ export const likePost = async(req, res) => {
     res.status(500).json({msg: err.message})
   }
 }
+
+export const commentPost = async(req, res) => {
+  try {
+    const { postId } = req.params
+    const { userId, comment } = req.body
+    
+    const post = await Post.findById(postId)
+    const user = await User.findById(userId)
+    
+    if (!post) return res.status(404).json({msg: 'Post does not exist.'})
+    
+    const payload = {
+      userId,
+      name: user?.firstName + ' ' + user?.lastName,
+      imgPath: user?.imgPath,
+      comment,
+    }
+    
+    post.comments.push(payload)
+    
+    const updatedPost = await Post.findByIdAndUpdate(
+      postId,
+      {comments: post.comments},
+      {new: true}
+    )
+    
+    res.status(200).json(updatedPost)
+  } catch (err) {
+    res.status(500).json({msg: err.message})
+  }
+}

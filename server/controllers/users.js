@@ -14,7 +14,7 @@ export const getUser = async(req, res) => {
   }
 }
 
-export const getuserFriends = async(req, res) => {
+export const getUserFriends = async(req, res) => {
   try {
     const { id } = req.params
     
