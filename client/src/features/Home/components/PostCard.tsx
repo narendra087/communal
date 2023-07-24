@@ -4,6 +4,8 @@ import { FiUserPlus, FiUserMinus, FiShare2 } from 'react-icons/fi'
 import { BiHeart, BiSolidHeart, BiMessageDetail } from 'react-icons/bi'
 
 import CardWrapper from 'components/CardWrapper'
+import PersonCard from 'components/PersonCard'
+
 import { useSelector } from 'react-redux'
 
 interface IComponent {
@@ -19,20 +21,12 @@ const PostCard = ({post}: IComponent) => {
   return (
     <CardWrapper>
       <VStack spacing={4}>
-        <Flex justifyContent={'space-between'} alignItems={'center'} w={'100%'}>
-          <Flex gap={'.5rem'} alignItems={'center'}>
-            <Avatar name={fullName} src={`${API_URL}/assets/${post?.userImgPath}`} />
-            <Box>
-              <Text fontWeight={500}>{fullName}</Text>
-              <Text fontSize={'sm'} color={'gray.500'}>{post?.address}</Text>
-            </Box>
-          </Flex>
-          
-          {(post?.userId !== user?._id) && <Box>
-            <IconButton isRound aria-label='Add friends' icon={<FiUserPlus />} />
-            {/* <IconButton isRound aria-label='Remove friends' icon={<FiUserMinus />} /> */}
-          </Box>}
-        </Flex>
+        <PersonCard
+          personId={post?.userId}
+          name={fullName}
+          image={post?.userImgPath}
+          address={post?.address}
+        />
         
         <Divider borderColor={'gray.300'} />
         
@@ -51,7 +45,7 @@ const PostCard = ({post}: IComponent) => {
         </Box>
         
         <Flex justifyContent={'space-between'} alignItems={'center'} w={'100%'}>
-          <Flex alignItems={'center'}>
+          <Flex alignItems={'center'} gap={'.5rem'}>
             <Button fontWeight={'normal'} leftIcon={<BiHeart />}>{0}</Button>
             <Button fontWeight={'normal'} leftIcon={<BiMessageDetail />}>{post?.comments ? post.comments.length : 0}</Button>
           </Flex>
