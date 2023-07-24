@@ -55,7 +55,7 @@ export const likePost = async(req, res) => {
     const { postId } = req.params
     const { userId } = req.body
     
-    const post = await Post.findById(id)
+    const post = await Post.findById(postId)
     if (!post) return res.status(404).json({msg: 'Post does not exist.'})
     
     const isLiked = post.likes.get(userId)

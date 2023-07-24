@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar, Box, Flex, Text, IconButton, Tooltip } from '@chakra-ui/react'
+import { Avatar, Box, Flex, Text, IconButton, Tooltip, Link } from '@chakra-ui/react'
 import { FiUserPlus, FiUserMinus } from 'react-icons/fi'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -43,7 +43,10 @@ const PersonCard = ({ personId, name, image, address }: IComponent) => {
       <Flex gap={'.5rem'} alignItems={'center'}>
         <Avatar name={name} src={`${API_URL}/assets/${image}`} />
         <Box>
-          <Text fontWeight={500}>{name}</Text>
+          <Link
+            href={`/profile/${personId}`}
+            fontWeight={500}
+          >{name}</Link>
           <Text fontSize={'sm'} color={'gray.500'}>{address}</Text>
         </Box>
       </Flex>
