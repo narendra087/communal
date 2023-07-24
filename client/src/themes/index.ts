@@ -1,8 +1,9 @@
 import {
+  DividerProps,
   extendTheme,
   type ThemeConfig,
 } from '@chakra-ui/react'
-import type { GlobalStyleProps } from "@chakra-ui/theme-tools"
+import type { GlobalStyleProps, StyleConfig } from "@chakra-ui/theme-tools"
 
 const config: ThemeConfig = {
   initialColorMode: 'light',
@@ -18,7 +19,16 @@ const styles = {
   })
 }
 
+const components: Record<string, StyleConfig> = {
+  Divider: {
+    baseStyle: ({colorMode}) => ({
+      borderColor: colorMode === 'dark' ? 'gray.500' : 'gray.300'
+    })
+  }
+}
+
 export const customTheme = extendTheme({
   config,
   styles,
+  components,
 })

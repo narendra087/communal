@@ -115,7 +115,7 @@ const LoginForm = () => {
                 </FormControl>
                 
                 <Button w={'100%'} mt={'1rem'} colorScheme='telegram' type='submit'>Login</Button>
-                <Divider borderColor={'gray.300'} my={'1rem'} />
+                <Divider my={'1rem'} />
                 
                 <Flex alignItems={'center'} justifyContent={'space-between'} w={'100%'} gap={'1rem'}>
                   <Text flex={1}>Doesn't have an account?</Text>

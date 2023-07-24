@@ -66,16 +66,14 @@ const PostFormCard = () => {
       <VStack spacing={4}>
         <Flex alignItems={'start'} gap={'1rem'} w={'100%'}>
           <Avatar size={'sm'} name={user?.firstName + ' ' + user?.lastName} src={`${API_URL}/assets/${user?.imgPath}`} />
-          <FormControl>
-            <Textarea
-              placeholder='Spill your story...'
-              size={'lg'}
-              variant={'outlined'}
-              resize={'none'}
-              onChange={(e) => setStory(e.target.value)}
-              value={story}
-            />
-          </FormControl>
+          <Textarea
+            placeholder='Spill your story...'
+            size={'lg'}
+            variant={'outlined'}
+            resize={'none'}
+            onChange={(e) => setStory(e.target.value)}
+            value={story}
+          />
         </Flex>
         
         {withImage && <Box w={'100%'}>
@@ -124,7 +122,7 @@ const PostFormCard = () => {
           </Dropzone>
         </Box>}
         
-        <Divider borderColor={'gray.300'} />
+        <Divider />
         
         <Flex w={'100%'} alignItems={'center'} justifyContent={'space-between'} gap={'1rem'}>
           <Flex w={'100%'} alignItems={'center'} gap={'.5rem'}>

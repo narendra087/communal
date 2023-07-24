@@ -29,7 +29,7 @@ const ProfileCard = () => {
           <IconButton aria-label='Profil page' icon={<LiaUserCogSolid />} onClick={() => navigate(`/profile/${user?._id}`)} />
         </Flex>
         
-        <Divider borderColor={'gray.300'} />
+        <Divider />
         
         <VStack spacing={3} w={'100%'}>
           <Flex w={'100%'} alignItems={'center'} gap={'.75rem'}>
@@ -42,7 +42,7 @@ const ProfileCard = () => {
           </Flex>
         </VStack>
         
-        <Divider borderColor={'gray.300'} />
+        <Divider />
         
         <VStack spacing={3} w={'100%'}>
           <Flex w={'100%'} alignItems={'center'} justifyContent={'space-between'} gap={'.75rem'}>

@@ -247,7 +247,7 @@ const RegisterForm = () => {
                 </FormControl>
                 
                   <Button w={'100%'} mt={'1rem'} colorScheme='whatsapp' type='submit'>Register</Button>
-                <Divider borderColor={'gray.300'} my={'1rem'} />
+                <Divider my={'1rem'} />
                 
                 <Flex alignItems={'center'} justifyContent={'space-between'} w={'100%'} gap={'1rem'}>
                   <Text flex={1}>Already have an account?</Text>

@@ -42,7 +42,7 @@ const HomePage = () => {
       </Box>
       <VStack flex={2} spacing={4}>
         <PostFormCard />
-        <Divider borderColor={'gray.300'} />
+        <Divider />
         {
           posts?.map((post:any, index:number) => (
             <PostCard post={post} key={post?._id || index} />

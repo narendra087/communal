@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Avatar, Flex, VStack, Box, Text, IconButton, Divider, Image, Button } from '@chakra-ui/react'
-import { FiUserPlus, FiUserMinus, FiShare2 } from 'react-icons/fi'
+import { Flex, Box, VStack, Text, IconButton, Divider, Image, Button, Avatar, Input, Center } from '@chakra-ui/react'
+import { FiShare2 } from 'react-icons/fi'
 import { BiHeart, BiSolidHeart, BiMessageDetail } from 'react-icons/bi'
 
 import CardWrapper from 'components/CardWrapper'
@@ -8,7 +8,7 @@ import PersonCard from 'components/PersonCard'
 
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
-import { SET_POSTS, UPDATE_POST } from 'stores/slices/authSlice'
+import { UPDATE_POST } from 'stores/slices/authSlice'
 
 interface IComponent {
   post: any
@@ -22,6 +22,7 @@ const PostCard = ({post}: IComponent) => {
   const token = useSelector((state:any) => state?.auth?.token)
   
   const [isComments, setIsComments] = useState(false)
+  const [comment, setCommend] = useState('')
   
   const fullName = `${post?.firstName} ${post?.lastName}`
   const isLiked = Boolean(post?.likes[user?._id])
@@ -52,7 +53,7 @@ const PostCard = ({post}: IComponent) => {
           address={post?.address}
         />
         
-        <Divider borderColor={'gray.300'} />
+        <Divider />
         
         <Flex w={'100%'} flexDirection={'column'} gap={'.5rem'}>
           <Text>{post?.description}</Text>
@@ -86,6 +87,35 @@ const PostCard = ({post}: IComponent) => {
           </Flex>
           <IconButton aria-label='Share' icon={<FiShare2 />} />
         </Flex>
+        
+        { isComments && (
+          <VStack w={'100%'} spacing={4}>
+            <Divider />
+            <Flex alignItems={'center'} gap={'1rem'} w={'100%'}>
+              <Avatar size={'sm'} name={user?.firstName + ' ' + user?.lastName} src={`${API_URL}/assets/${user?.imgPath}`} />
+              <Input
+                placeholder='Comment this story ...'
+                variant={'outlined'}
+                value={comment}
+                onChange={(e) => setCommend(e.target.value)}
+              />
+            </Flex>
+            <Divider />
+            {
+              post?.comments.length ? (
+                post?.comments.map((comment:any, i:number) => (
+                  <Flex key={`${post?._id}-${i}`}>
+                    <Divider />
+                    <Text>
+                      {comment}
+                    </Text>
+                  </Flex>
+                )
+              )) : (
+                <Center color={'gray.500'}>No Commend yet.</Center>
+              )}
+          </VStack>
+        )}
       </VStack>
     </CardWrapper>
   )
