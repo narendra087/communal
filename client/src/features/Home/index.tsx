@@ -10,6 +10,8 @@ import ProfileCard from './components/ProfileCard'
 import PostFormCard from './components/PostFormCard'
 import PostCard from './components/PostCard'
 
+import FriendsWidget from 'components/FriendsWidget'
+
 const API_URL = process.env.REACT_APP_API_URL
 
 const HomePage = () => {
@@ -49,7 +51,9 @@ const HomePage = () => {
           ))
         }
       </VStack>
-      <Box flex={1}></Box>
+      <Box flex={1}>
+        <FriendsWidget />
+      </Box>
     </Flex>
   )
 }
